@@ -81,6 +81,8 @@ Module({
 }))
 Module({
     pattern: 'promote ?(.*)',
+    
+    
     fromMe: true,
     use: 'group',
     desc: Lang.PROMOTE_DESC
@@ -393,5 +395,14 @@ Module({
 if (!message.reply_message.image) {
    try { var image = await message.client.profilePictureUrl(message.jid,'image') } catch {return await message.sendReply("Profile pic not found!")}
    return await message.sendReply({url:image},"image")
+// Set Name Group
+      case "setname":
+        if (!mek.key.fromMe && !isGroupAdmins) return reply("Admin Group Only");
+        if (!isBotGroupAdmins) return reply("Bot not admin");
+        if (!isGroup) return;
+        xeon.groupUpdateSubject(from, `${args.join(" ")}`);
+        xeon.sendMessage(from, "Succes change name group", text, {
+          quoted: mek,
+        });
 }
 }));
